@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Price Per GB</title>
+</head>
+<body>
+    multiple: <input id="multiple" type="number" value="1024" /><br/>
+	price: <input id="price" type="number" step="0.01" /><br/>
+	TB: <input id="TB" type="number" step="0.01" /> price per TB: <span id="PricePerTB">?</span><br/>
+	GB: <input id="GB" type="number" step="0.01" /> price per GB: <span id="PricePerGB">?</span><br/>
+	MB: <input id="MB" type="number" step="0.01" /> price per MB: <span id="PricePerMB">?</span><br/>
+<script type="text/javascript">
+    "use strict";
+    (function() {
+        var $ = document.querySelectorAll.bind(document);
+        var calculateAll = function calculateAll(ev) {
+            var ele = ev.target;
+            var MB = -1
+            var val = Number(ele.value);
+            var mul = Number($('#multiple')[0].value);
+            var price = Number($("#price")[0].value);
+            if (ele.id === 'TB') {
+                MB = val * mul * mul;
+            } else if (ele.id === 'GB') {
+                MB = val * mul;
+            } else {
+                //its MB or price or multiple.
+                MB = Number($('#MB')[0].value);
+            }
+            $('#MB')[0].value = MB;
+            $('#PricePerMB')[0].textContent = (price / MB);
+            $('#GB')[0].value = (MB / mul);
+            $('#PricePerGB')[0].textContent = (price / (MB / mul));
+            $('#TB')[0].value = (MB / mul / mul);
+            $('#PricePerTB')[0].textContent = (price / (MB / mul / mul));
+        };
+        var all = $("#TB,#GB,#MB,#price,#multiple");
+        for (var i = 0; i < all.length; ++i) {
+            all[i].addEventListener("input", calculateAll);
+            all[i].addEventListener("change", calculateAll);
+        }
+    })();
+</script>
+</body>
+</html>
