@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>bytememe</title>
+</head>
+<body>
+	multiplier: <input id="multiplier" value="1024" type="number" /><br/>	
+	bytes: <input id="bytes" type="text" /><br/>
+	TB: <input id="TB" type="number" step="0.01" /><br/>
+	GB: <input id="GB" type="number" step="0.01" /><br/>
+	MB: <input id="MB" type="number" step="0.01" /><br/>
+	KB: <input id="KB" type="number" step="0.01" /><br/>
+<script type="text/javascript">
+    "use strict";
+    (function() {
+        var $ = document.querySelectorAll.bind(document);
+        var calculateAll = function calculateAll(ev) {
+			
+            let code=$("#bytes")[0].value;
+            let multiplier=Number($("#multiplier")[0].value);
+			let tmp = eval(code);
+			tmp=tmp/multiplier;
+            $('#KB')[0].value = tmp.toFixed(10);
+			tmp=tmp/multiplier;
+            $('#MB')[0].value = tmp.toFixed(10);
+			tmp=tmp/multiplier;
+            $('#GB')[0].value = tmp.toFixed(10);
+			tmp=tmp/multiplier;
+            $('#TB')[0].value = tmp.toFixed(10);
+        };
+        var all = $("#bytes,#multiplier");
+        for (var i = 0; i < all.length; ++i) {
+            all[i].addEventListener("input", calculateAll);
+            all[i].addEventListener("change", calculateAll);
+        }
+    })();
+</script>
+</body>
+</html>
